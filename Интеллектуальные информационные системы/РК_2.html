@@ -1,0 +1,210 @@
+
+
+
+<script type="application/javascript" defer>
+
+    const alph = [
+        "а", "б", "в", "г", "д", "е",
+        "ё", "ж", "з", "и", "й", "к",
+        "л", "м", "н", "о", "п", "р",
+        "с", "т", "у", "ф", "х", "ц",
+        "ч", "ш", "щ", "ъ", "ы", "ь",
+        "э", "ю", "я"
+    ]
+
+    const shifrClick = () =>{
+        // Получение данных из формы
+        let keyInput = document.getElementById("key_input");
+        let textareaInput = document.getElementById("textarea_input");
+        let textareaOutput = document.getElementById("textarea_output");
+        let resultStr="";
+
+        // Разбивка текста и ключа на массив
+        let listCharTextareaInput = textareaInput.value.split("");
+        let listCharKeyInput = keyInput.value.split("");
+
+        // Счётчик элемента ключа
+        let keyCharActive = 0;
+        // Переменная для хранения индекса буквы ключа
+        let indexKeyCharActive = 0;
+        // Переменная для хранения индекса буквы текста
+        let indexAlph = 0;
+
+        // Перебор всех элементов исходного текста
+        listCharTextareaInput.map((item, index)=>{
+
+            // Получение индекса буквы исходного текста
+            indexAlph = alph.indexOf(item.toLowerCase())
+
+            // Если буква есть в массиве алфавита и элемент ключа неравен пробелу или undefined
+            if(indexAlph!==-1 && listCharKeyInput[keyCharActive]!==" " && listCharKeyInput[keyCharActive]!==undefined){
+                // Получение индекса буквы ключа
+                indexKeyCharActive = alph.indexOf(listCharKeyInput[keyCharActive].toLowerCase());
+
+                // Расчёт индекса буквы для подстановки и её подстановка
+                resultStr+=alph[((indexAlph+indexKeyCharActive+1)%alph.length)]
+
+                // Увелечение счётчика ключа, если счётчик превышает длину ключа, то он обнуляется
+                keyCharActive++;
+                if(keyCharActive>listCharKeyInput.length-1){
+                    keyCharActive=0;
+                }
+            }
+            // Если элемент ключа равен пробелу, а индекс буквы исходного текста является буквой алфавита
+            else if (listCharKeyInput[keyCharActive]===" " && alph.indexOf(item.toLowerCase())!==-1){
+                // В результат подставляется символ из изночального текста
+                resultStr+=item;
+
+                // Увелечение счётчика ключа, если счётчик превышает длину ключа, то он обнуляется
+                keyCharActive++;
+                if(keyCharActive>listCharKeyInput.length-1){
+                    keyCharActive=0;
+                }
+            }
+            // Иначе в результат подставляется символ из изночального текста
+            else{
+                resultStr+=item;
+            }
+        })
+        // Вывод результата
+        textareaOutput.value = resultStr;
+    }
+
+    const deShifrClick = () =>{
+        // Получение данных из формы
+        let keyInput = document.getElementById("key_input");
+        let textareaInput = document.getElementById("textarea_input");
+        let textareaOutput = document.getElementById("textarea_output");
+        let resultStr="";
+
+        // Разбивка текста и ключа на массив
+        let listCharTextareaInput = textareaInput.value.split("");
+        let listCharKeyInput = keyInput.value.split("");
+
+        // Счётчик элемента ключа
+        let keyCharActive = 0;
+        // Переменная для хранения индекса буквы ключа
+        let indexKeyCharActive = 0;
+        // Переменная для хранения индекса буквы текста
+        let indexAlph = 0;
+
+        // Перебор всех элементов исходного текста
+        listCharTextareaInput.map((item, index)=>{
+
+            indexAlph = alph.indexOf(item.toLowerCase())
+
+            // Если буква есть в массиве алфавита и элемент ключа неравен пробелу или undefined
+            if(indexAlph!==-1 && listCharKeyInput[keyCharActive]!==" " && listCharKeyInput[keyCharActive]!==undefined){
+                // Получение индекса буквы ключа
+                indexKeyCharActive = alph.indexOf(listCharKeyInput[keyCharActive].toLowerCase());
+
+                // Если разница индексов меньше нуля
+                if((indexAlph)-(indexKeyCharActive+1)<0)
+                    resultStr+=alph[(alph.length+((indexAlph)-(indexKeyCharActive+1)))]
+                else
+                    resultStr+=alph[(((indexAlph)-(indexKeyCharActive+1))%alph.length)]
+
+                // Увелечение счётчика ключа, если счётчик превышает длину ключа, то он обнуляется
+                keyCharActive++;
+                if(keyCharActive>listCharKeyInput.length-1){
+                    keyCharActive=0;
+                }
+            }
+            // Если элемент ключа равен пробелу, а индекс буквы исходного текста является буквой алфавита
+            else if (listCharKeyInput[keyCharActive]===" " && alph.indexOf(item.toLowerCase())!==-1){
+                // В результат подставляется символ из изночального текста
+                resultStr+=item;
+
+                // Увелечение счётчика ключа, если счётчик превышает длину ключа, то он обнуляется
+                keyCharActive++;
+                if(keyCharActive>listCharKeyInput.length-1){
+                    keyCharActive=0;
+                }
+            }
+            // Иначе в результат подставляется символ из изночального текста
+            else{
+                resultStr+=item;
+            }
+        })
+        // Вывод результата
+        textareaOutput.value = resultStr;
+    }
+
+</script>
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РК_2</title>
+</head>
+<body>
+    <div class="window_input">
+        <div class="input_item">
+            <div class="input_item_text">
+                Ключ:
+            </div>
+            <input type="text" id="key_input">
+        </div>
+        <div class="input_item">
+            <div class="input_item_text">
+                Изначальный текст:
+            </div>
+            <textarea name="" id="textarea_input" cols="30" rows="10"></textarea>
+        </div>
+
+        <button onclick="shifrClick()">Зашифравать</button>
+        <button onclick="deShifrClick()">Расшифровать</button>
+    </div>
+    <div class="window_output">
+        <div class="input_item input_item_output">
+            <div class="input_item_text">
+                Результат:
+            </div>
+            <textarea name="" id="textarea_output" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+        
+    <style>
+        body{
+            display: flex;
+            gap:100px;
+        }
+
+        .window_input{
+            display: flex;
+            flex-direction: column;
+            width: 500px;
+            gap:30px;
+        }
+
+        #textarea_input{
+            height: 200px;
+        }
+
+        #textarea_output{
+
+            height: 200px;
+        }
+
+        .window_output{
+            display: flex;
+        }
+
+        .input_item{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input_item_output{
+            margin-top: 70px;
+        }
+    </style>
+
+
+</body>
+</html>
+
